@@ -364,5 +364,441 @@
 
 // //#endregion
 
+// //#region 1.4. Obiecte. Deep copy
+
+// // Obiectele sunt niste entitati ce contin una sau mai multe proprietati/unul sau mai multi membri si metodelle
+// // Prin proprietati ne referim la niste asocieri dintre un nume si o valoare.Prin
+// // Deci, cu alte cuvinte, obiectele sunt niste variabile ce contin o lista de variabile si metode.
+
+// //exemplu
+
+
+// //prima metoda de definire
+// let a = new Object();
+
+// a.nr1 = 3;
+// a.nr2 = 5;
+
+// console.log(a.nr1 + a.nr2);  //8
+
+// //a doua metoda de definire
+// let a = {
+//     nr1: 3,
+//     nr2: 5
+// }
+// console.log(a.nr1 + a.nr2);  //8
+
+
+// //a treia metoda de definire
+// let a ={};
+
+// a.nr1 = 3;
+// //sau
+// a['nr2'] = 5;
+
+// console.log(a['nr1'] + a.nr2); //8
+
+// //obiect cu membri si metode
+
+
+// let a = {
+//     nr1: 3,
+//     nr2: 5,
+//     add: function(){
+//         console.log(this.nr1 + this.nr2);
+//     }
+// }
+// a.add();  //8
+
+// let a = {};
+
+// a.nr1 = 3;
+// a.nr2=5;
+// a.add=function(){
+//     console.log(this.nr1 + this.nr2);
+// }
+
+// a.add(); // 8
+
+// // Deep Copy
+
+// //Oarecum am atins putin aceast subiect, indirect, la categoria de spread operator.
+
+
+// // Deci, deep copy se refera la realizarea unui obiect identic cu cel pe care il dorim, 
+// // insa, fara sa aiba, dupa copiere, orice alta legatura cu obiectul copiat.
+
+// //exemplu 
+
+// //in cazul acestor asignari a unor variabile primitive, "basic", javascript
+// //face automat o copiere a datelor, b-ul primeste valoarea lui a si dupa 
+// // nu mai are nicio legatura cu a
+
+// let a = 3;
+
+// let b = a;
+
+// b = b+3;
+
+// console.log(a); //3
+// console.log(b); //6
+
+// let a = "abc";
+
+// let b = a;
+
+// b = b + "de";
+
+// console.log(a); //abc
+// console.log(b); //abcde
+
+// // Cand vorbim de niste variabile mai complexe, adica niste array-uri, obiecte,
+// //daca pastram aceasi structura ca cea mai sus, nu creem o noua variabila ce contine
+// //acele date, ci se copiaza o referinta catre obiectul pe care il vrem copiat.
+
+// //Cu alte cuvinte, amandoua variabilele vor indica catre acceasi zona de memorie, 
+// //catre aceleasi date, si orice modificare asupra uneia dintre variabile este vizibila
+// //si de catre cealalta.
+
+// let a = ['a','b','c'];
+
+// let b = a;
+
+// b.push('d');
+// b.push('e');
+
+// console.log(a); //[ 'a', 'b', 'c', 'd', 'e' ]
+// console.log(b); //[ 'a', 'b', 'c', 'd', 'e' ]
+
+// //se observa ca amandoua variabilele, afiseaza aceleasi date, chiar Daca
+// // am adus modificari doar lui b
+
+// //exemplul de mai sus este cunoscut si sub numele de "Shallow copying"
+
+
+// // Am gasit 5 metode de a copia in sensul definit la inceput, acel deep-copy
+
+// //a) pur si simplu asignarea, asa cum am prezentat-o putin mai sus (merge doar la variabilele primitive)
+
+// let a = 3;
+
+// let b = a;
+
+// b = b+3;
+
+// console.log(a); //3
+// console.log(b); //6
+
+// //b) prin JSON.stringify() si JSON.parse() (copiaza datele, insa nu poate copia metodele din acestea)
+
+// let a = {
+//     nr1: 32,
+//     desc: "variabila a"
+// }
+
+// let b = JSON.parse(JSON.stringify(a));
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a' }
+// console.log(b); //{ nr1: 32, desc: 'variabila a' }
+
+// b.nr1 = 33;
+// b.desc = "variabila b";
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a' }
+// console.log(b); //{ nr1: 33, desc: 'variabila b' }
+
+// //obiecte cu metode
+
+// let a = {
+//     nr1: 32,
+//     desc: "variabila a",
+//     getNr: function () { return 32;}
+// }
+
+// let b = JSON.parse(JSON.stringify(a));
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 32, desc: 'variabila a' }
+
+// console.log(b.getNr()); //eroare, nu exista declarata metoda getNr
+
+// b.nr1 = 33;
+// b.desc = "variabila b";
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 33, desc: 'variabila b' }
+
+
+// //c) prin Object.assign() (copiaza si metodele, insa daca obiectele copiate contin membri care la randul lor sunt obiecte
+// //si tot asa, nu copiaza totul, in profunzime, in cazurile acelea se rezuma la copiat de referinte)
+
+// let a = {
+//     nr1: 32,
+//     desc: "variabila a",
+//     getNr: function () { return 32;}
+// }
+
+// let b = Object.assign({}, a);
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+
+// console.log(b.getNr()); //32
+
+// b.nr1=33;
+// b.desc = "variabila b";
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 33, desc: 'variabila b', getNr: [Function: getNr] }
+
+// //caz cu obiecte imbricate
+// let a = {
+//     nr1: 32,
+//     nrs:{
+//         nr2: 33,
+//         nr3: 34
+//     },
+//     desc: "variabila a",
+//     getNr: function () { return 32;}
+// }
+
+// let b = Object.assign({}, a);
+
+// console.log(a); 
+// /*{
+//     nr1: 32,
+//     nrs: { nr2: 33, nr3: 34 },
+//     desc: 'variabila a',      
+//     getNr: [Function: getNr]  
+//   }*/
+// console.log(b); 
+// /*{
+//     nr1: 32,
+//     nrs: { nr2: 33, nr3: 34 },
+//     desc: 'variabila a',      
+//     getNr: [Function: getNr]  
+//   }*/
+
+// console.log(b.getNr()); //32
+
+// b.nr1=33;
+// b.desc = "variabila b";
+// b.nrs.nr2 = 55;
+// b.nrs.nr3 = "abc";
+
+// console.log(a); 
+// /*{
+//   nr1: 32,
+//   nrs: { nr2: 55, nr3: 'abc' },
+//   desc: 'variabila a',
+//   getNr: [Function: getNr]
+// }
+// */
+// console.log(b); 
+// /*
+
+// {
+//   nr1: 33,
+//   nrs: { nr2: 55, nr3: 'abc' },
+//   desc: 'variabila b',
+//   getNr: [Function: getNr]
+// }
+
+// */
+
+// // Asadar, se intampla deep copy pt primul nivel de variabile/obiecte, iar pentru al doilea nivel se intampla
+// // un shallow copy
+
+// // d) cu operatorul spread (...). Metoda preferata de copiere, simpla si usoara. Asemenea cu Object.assign(), 
+// // nu se face copierea in detaliu a tuturor obiectelor din variabile imbricate
+
+// let a = {
+//     nr1: 32,
+//     desc: "variabila a",
+//     getNr: function () { return 32;}
+// }
+
+// let b = {...a};
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+
+// console.log(b.getNr()); //32
+
+// b.nr1=33;
+// b.desc = "variabila b";
+
+// console.log(a); //{ nr1: 32, desc: 'variabila a', getNr: [Function: getNr] }
+// console.log(b); //{ nr1: 33, desc: 'variabila b', getNr: [Function: getNr] }
+
+// //obiecte imbricate
+
+// let a = {
+//     nr1: 32,
+//     nrs:{
+//         nr2: 33,
+//         nr3: 34
+//     },
+//     desc: "variabila a",
+//     getNr: function () { return 32;}
+// }
+
+// let b = {...a};
+
+// console.log(a); 
+// /*{
+//     nr1: 32,
+//     nrs: { nr2: 33, nr3: 34 },
+//     desc: 'variabila a',      
+//     getNr: [Function: getNr]  
+//   }*/
+// console.log(b); 
+// /*{
+//     nr1: 32,
+//     nrs: { nr2: 33, nr3: 34 },
+//     desc: 'variabila a',      
+//     getNr: [Function: getNr]  
+//   }*/
+
+// console.log(b.getNr()); //32
+
+// b.nr1=33;
+// b.desc = "variabila b";
+// b.nrs.nr2 = 55;
+// b.nrs.nr3 = "abc";
+
+// console.log(a); 
+// /*{
+//   nr1: 32,
+//   nrs: { nr2: 55, nr3: 'abc' },
+//   desc: 'variabila a',
+//   getNr: [Function: getNr]
+// }
+// */
+// console.log(b); 
+// /*
+
+// {
+//   nr1: 33,
+//   nrs: { nr2: 55, nr3: 'abc' },
+//   desc: 'variabila b',
+//   getNr: [Function: getNr]
+// }
+
+// */
+
+// // e) folosim metoda _.cloneDeep() din libraria Lodash 
+
+// //aceasta metoda este capabila sa faca deep-copy recursiv, pentru toate obiectele imbricate
+// //dintr-o variabila
+
+// //exemplu preluat din documentatia lodash 
+// //https://lodash.com/docs/4.17.15
+
+// var objects = [{ 'a': 1 }, { 'b': 2 }];
+ 
+// var deep = _.cloneDeep(objects);
+// console.log(deep[0] === objects[0]); // => false
+
+
+// //#endregion
+
+
+
+// //#region 1.5. Arrays - accesor, iteration, mutator methods
+
+// // Array -ul este o variabila care e folosita sa stocheze diferite elemente/entitati/variabile
+// // Diferenta dintre array si un obiect este faptul ca nu atribuim
+// // un nume  unei variabile, nu avem cheie -> valoarea
+// //am inteles ca este de recomandat de lucrat doar 
+// //Declarare
+
+// let a = [1,2];
+// let b = new Array(3,4);
+
+// console.log(a); //[ 1, 2 ]
+// console.log(b); //[ 3, 4 ]
+
+
+// // sau
+// let a = [1,2, "ab"];
+// let b = new Array(3,4, "cd");
+
+// console.log(a); //[ 1, 2, 'ab']
+// console.log(b); //[ 3, 4, 'cd']
+
+// //sau 
+// let c = {
+//   nr1: 13
+// }
+// let a = [1,2, "ab", c];
+// let b = new Array(3,4, "cd", a);
+
+// console.log(a); //[ 1, 2, 'ab', { nr1: 13 } ]
+// console.log(b); // [ 3, 4, 'cd', [ 1, 2, 'ab', { nr1: 13 } ] ]
+
+
+// // Spre deosebire de  obiecte unde putem accesa elementele din acesta atat printr-o proprietate(prin numele variabilei in sine) dar si 
+// // ca un id de intrare (intre paranteze drepte ['nume_var']), la array putem doar printr-un id, iterator.
+
+// //obiect
+// let c = {
+//   nr1: 13
+// }
+// console.log(c.nr1); //13
+// console.log(c['nr1']); //13
+
+// //array
+// let a = [1,2, "ab"];
+// console.log(a[0]); //1
+// console.log(a[2]); // 'ab'
+
+// // Putem itera, accesa elementele dintr-un array folosind 
+// // numere de la 0 la lungimea array-ului (array.lenght - 1)
+// let a = [1,2, "ab"];
+// console.log(a.length); //3
+// console.log(a[2]); // 'ab'
+// console.log(a[3]); //undefined
+
+// //Mutator methods vs Non-mutator methods
+
+// // In cel mai simplu mod de a explica, mutator methods sunt acele
+// //metode din interiorul clasei array care modifica si array-ul in sine,
+// // cel initializat.
+// // Non-mutator methods sunt cele care nu modifica nimic in array-ul respectiv insa
+// // intorc finalitatea actiunii asupra acelui array
+
+// //Mutator
+
+// //cateva exemple
+
+// let a = [1,2,3,4,5];
+// console.log(a); //[ 1, 2, 3, 4, 5 ]
+
+// a.push(7); //metoda push
+// console.log(a); //[ 1, 2, 3, 4, 5, 7 ]
+
+// a.reverse(); //metoda reverse
+// console.log(a); //[ 7, 5, 4, 3, 2, 1 ]
+
+// //se observa ca se modifica array-ul initial
+
+// //Non-mutator
+
+// let a = [1,2]; 
+// let b = [9,19,12];
+
+// let c = a.concat(b); //metoda concat
+// console.log(c); //[ 1, 2, 9, 19, 12 ]
+// console.log(a); //[ 1, 2 ]
+// console.log(b); //[ 9, 19, 12 ]
+
+// let d = a.includes(3); //metoda includes
+// console.log("Contine a pe 3? " + d); //Contine a pe 3? false
+
+// //se observa ca nu sunt aduse schimbari asupra niciunui array
+// // la metodele non-mutator
+
+// //#endregion
 
 
