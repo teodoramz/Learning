@@ -7,6 +7,13 @@
 // 1.7. Async. Await. 
 // 1.8. Closures.
 
+//**********************//
+/*  
+  Am incercat sa explic cat de bine am putut tot ce am citit, am incercat sa trec prin cat mai multe exemple si sa le testez pe toate.
+  
+  Sper ca nu va fi greu de urmarit.
+*/
+// 
 
 // //#region 1.1. Metode
 
@@ -704,7 +711,6 @@
 // //#endregion
 
 
-
 // //#region 1.5. Arrays - accesor, iteration, mutator methods
 
 // // Array -ul este o variabila care e folosita sa stocheze diferite elemente/entitati/variabile
@@ -801,4 +807,250 @@
 
 // //#endregion
 
+//Urmatoarele sectiuni sunt destul de ample si cred ca e mult
+//mai mult de studiu pentru a le intelege pe toate, cu adevarat.
+// O sa incerc sa le inteleg cat mai bine, sa explic ce am inteles
+// si sper eu sa acopar destule concepte.
+
+//#region 1.6. Promise. Callback.
+
+//Deci, cum ii spune si numele, Promise este promisiunea de a se intampla ceva,
+//de a primi ceva, candva, in urma unei actiuni.
+
+
+// Promisiunea reprezinta terminarea unor actiuni, asincron. 
+//Returneaza o valoare in functie de rezultat (daca promisiunea a fost ignorata sau rezolvata).
+
+
+// Promisiunea exista in 3 stadii:
+// Pending : "Inca nu s-a promis nimic", adica inca nu a ajuns sa se execute functia din promisiune.
+// Fullfilled: Intreaga promisiune s-a efectuat.
+// Rejected: Erori aparute in timpul executiei promisiunii.
+
+//Promisiunile se definesc cu ajutorul clasei Promise
+
+//let promise = new Promise(function(resolve, reject) {})
+
+//Promisiunea primeste ca argumente functiile resolve si rejected
+// si returneaza fie rezultatul primei functii, fie pe al doilea
+
+// let aPromise = new Promise(function(resolve, reject){
+//   let a = 5;
+
+//   if(a==3){
+//     resolve("Succes!");
+//   }
+//   else{
+//     reject("Esec!");
+//   }
+// })
+
+// aPromise.then(//unde x este rezultatul intors de promisiune
+//   function(x){ 
+//      console.log(x); //succes
+//   },
+//   function(x){ 
+//   console.log(x)} //esec
+//             )
+
+//Promisiunea are urmatoarele metode care efectuaza actiuni cu rezultatul intors de promisiune a
+//.then() - care preia rezultatul intors de promisiune, si in functie daca este rezolvata sau respinsa, apeleaza functiile definite in acestea
+
+//sintaxa: promisiune.then(
+//     functie_pt_reusita(in care ii dam si valoarea returnata sau nu),
+//     functie_pt_esec(in care ii dam si valoarea returnata sau nu)
+// );
+
+//un exemplu cu acest tip 
+
+// let aPromise = new Promise(function(resolve, reject){
+//   let a = 5;
+
+//   if(a==3){
+//     resolve("Succes!");
+//   }
+//   else{
+//     reject("Esec!");
+//   }
+// })
+
+// aPromise.then(//unde x este rezultatul intors de promisiune
+//   function(x){ 
+//      console.log(x); //succes
+//   },
+//   function(x){ 
+//   console.log(x)} //esec
+//             )
+
+// .catch() - modalitatea de a rezolva erori sau esecuri ale promisiunii
+
+// let aPromise = new Promise(function(resolve, reject){
+//   let a = 5;
+
+//   if(a==3){
+//     resolve("Succes!");
+//   }
+//   else{
+//     reject("Esec!");
+//   }
+// })
+
+// aPromise.then(//unde x este rezultatul intors de promisiune
+//   function(x){ 
+//      console.log(x); //succes
+//   })
+//         .catch(function(x){ 
+//               console.log(x); //esec
+//         })
+
+//se va afisa esec
+//daca la exemplul cu metoda then, punem la parametri in metoda then doar o functie, 
+//in momentul cand promisiunea esuaza, nu exista o functie care sa se ocupe de fail
+
+
+// .resolve() si .reject()   - ne returneaza un pointer cu un obiect Promise terminat/ esuat 
+
+// Promise.resolve('Succes').then(function(val) {  
+//   console.log(val);  
+// }, function(val) {  
+// });  
+
+// Promise.reject('Esuat').then(function(val) {  }, function(val) {  console.log(val);  });  
+
+
+// Callback
+
+// Prin callback-uri manageriem executia unei functii dupa ce alta functie s-a terminator
+// De obicei sunt folosite cand lucram cu event-uri
+// Callback-urile sunt niste functii trimise ca argumente catre alte functii
+
+// function sayHello(x){
+//   console.log(x);
+// }
+
+// function functie(x){
+  
+//  sayHello(x);
+// }
+
+// function functie2(sayHello){
+//   console.log("Hei hei");
+// }
+
+// functie("Salut");
+// functie2();
+
+//este o apelare recursiva a functiilor
+
+//#endregion
+
+
+//#region 1.7.  Async. Await. 
+
+//Cu async ne asiguram ca nu mai asteptam dupa executia unei functii, trecem mai departe, 
+// functia terminandu-se candva, cand reuseste
+
+//async face ca o functie sa returneze o promisiune
+// pornind de la exemplul cu promisiunea:
+
+
+// let aPromise = new Promise(function(resolve, reject){
+//   let a = 5;
+
+//   if(a==3){
+//     resolve("Succes!");
+//   }
+//   else{
+//     reject("Esec!");
+//   }
+// })
+
+// aPromise.then(//unde x este rezultatul intors de promisiune
+//   function(x){ 
+//      console.log(x); //succes
+//   },
+//   function(x){ 
+//   console.log(x)} //esec
+//             )
+
+//cu async 
+
+// async function myFunc(){
+//   let a = 5;
+//   if(a==3){
+//     return "Succes";
+//   }
+//   else{
+//     return "Esec";
+//   }
+// }
+
+// console.log(myFunc());  //Promise { 'Esec' }
+
+//deci putem sa continuam si cu o metoda de a prelua informatia data de functie
+
+// myFunc().then(function(x){console.log(x)}).catch(function(err){console.log(err)});  //esec
+
+// await inainte de o functie o face pe aceasta sa astepte dupa o promisiune (poate fi folosit doar in interiorul unei functii async)
+ 
+// async function myFunc(){
+//   let a = 3;
+//   if(a==3){
+//     return "Succes1";
+//   }
+//   else{
+//     return "Esec1";
+//   }
+// }
+
+// async function myFunc2(){
+//   let a = 3;
+//   let rez = await myFunc();
+//   if(a==3){
+//     return rez;
+//   }
+//   else{
+//     return "Esec2";
+//   }
+// }
+
+// myFunc2().then(function(x){console.log(x)}).catch(function(err){console.log(err)}); 
+
+
+//#endregion
+
+
+//#region 1.8. Closures
+
+// Closures este o colectie de variabile aflate intr-o functie ce ne permite sa securizam anumite date (privatizam) si sa dam
+// acces doar la anumite functii sa le acceseze
+
+//ca o paralela, le putem compara cu o clasa din C, unde closure simuleaza aceasta clasa, in care avem membrii privati si doar 
+//functiile din aceasta clasa pot lucra cu acestia.
+
+// let app = (function () {
+//   //membri privati
+
+//   let a = 3;
+//   let b = 5;
+//   let suma = 0;
+//   function add(){
+//     suma = suma + a + b;
+//     return suma;
+//   }
+//   return add;
+
+// })();
+
+// let a = app(); 
+// console.log(a); //8
+// a = app();
+// console.log(a); //16
+// a = app();
+// console.log(a); //24
+
+// Closures au venit si ca solutie pentru rezolvarea problemei redenumirii variabilelor cu var
+// cu acestea ne asiguram ca nu modifica nimeni nicio valoare din interiorul functiei, doar functiile publice, care pot fi apelate
+
+//#endregion
 
