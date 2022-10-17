@@ -1,0 +1,18 @@
+###
+ #GET http://localhost:5000/articles
+
+
+ ###
+
+
+ #GET http://localhost:5000/articles
+
+
+POST http://localhost:5000/articles
+Content-Type: : application/json
+
+{
+    "Article_name": "Articol ceva",
+    "Article_no": "1",
+    "Article_short_description": "Ceva articol"
+}

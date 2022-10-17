@@ -29,11 +29,14 @@ router.get('/:name', (req, res) => {
 
 //POST
 router.post('/', async (req, res) => {
-    const article = new Articles({ 
-        Article_name: req.body.article_name,
-        Article_no: req.body.article_no,
-        Article_short_description: req.body.article_short_description
+    const article = new articleSchema({ 
+        Article_name: req.body.Article_name,
+        Article_no: req.body.Article_no,
+        Article_short_description: req.body.Article_short_description
     });
+
+   // res.json(req.body.Article_no);
+
 
     try{
         const newArticle = await article.save();
