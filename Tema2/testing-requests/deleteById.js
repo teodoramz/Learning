@@ -9,7 +9,7 @@
 var request = require('request');
 var options = {
   'method': 'DELETE',
-  'url': 'http://localhost:5000/articles/634db7d821c7a244d887ee3d',
+  'url': 'http://localhost:5000/articles/[id]',
   'headers': {
   }
 };

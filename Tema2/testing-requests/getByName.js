@@ -7,19 +7,15 @@
 
 var request = require('request');
 var options = {
-  'method': 'PUT',
-  'url': 'http://localhost:5000/articles/634d9622478500ab688b8ebc',
+  'method': 'GET',
+  'url': 'http://localhost:5000/articles/[nume_articol]',
   'headers': {
     'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "Article_name": "Teodor EX",
-    "Article_no": 17,
-    "Article_short_description": "Nimic"
-  })
+  }
 
 };
 request(options, function (error, response) {
   if (error) throw new Error(error);
-  console.log(response.body);
+  //console.log(response.body);
+  console.log(JSON.parse(response.body));
 });
