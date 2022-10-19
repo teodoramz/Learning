@@ -27,9 +27,15 @@ router.get('/', async (req, res) => {
 
 //GET one  -- name
 router.get('/:name', getArticleNAME, (req, res) => {
-  res.status(200).json(res.article);
+    try{
+        res.status(200).json(res.article);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
     
 })
+
 
 //POST
 router.post('/', async (req, res) => {
