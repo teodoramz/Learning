@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const categorySchema = require('../models/categories');
 
+const idFunctions = require('../middlewares/routesFunc');
 
 router.get('/', async (req, res) => {
     try{
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
    
 })
 
-router.get('/:id', getCategoriesID, (req, res) => {
+router.get('/:id', idFunctions.getCategoriesID, (req, res) => {
     try{
         res.status(200).json(res.category);
     }
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
 })
 
 
-router.put('/:id', getCategoriesID, async (req, res) => {
+router.put('/:id', idFunctions.getCategoriesID, async (req, res) => {
     try{ 
      
      const updatedCategory = await categorySchema.updateOne({_id : res.category._id}, req.body);
@@ -51,7 +52,7 @@ router.put('/:id', getCategoriesID, async (req, res) => {
  })
  
  
- router.delete('/:id', getCategoriesID, async (req, res) => {
+ router.delete('/:id', idFunctions.getCategoriesID, async (req, res) => {
      try{
          await res.category.remove();
          res.status(201).json({message: 'Deleted succesfully!'});
@@ -61,21 +62,5 @@ router.put('/:id', getCategoriesID, async (req, res) => {
      }
  })
 
-async function getCategoriesID(req, res, next){
-    let category;
-    try{
-        category = await categorySchema.findById(req.params.id);
-        // findById -- find docs by id
-        if(category == null){
-            return res.status(404).json({message: 'Category not found'})
-        }
-    }
-    catch(err){
-    return res.status(500).json({message: err.message})
-    }
-    
-        res.category = category;
-        next();  //move on
-    }
 
 module.exports = router;

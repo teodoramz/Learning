@@ -4,7 +4,7 @@ const router = express.Router();
 const articleSchema = require('../models/articles');
 const Token = require('../models/tokens');
 
-
+const idFunctions = require('../middlewares/routesFunc');
 //200 -- OK (all's good)
 //201 -- Succes (succesfully created an object)
 
@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 
 
 //GET one  -- name
-router.get('/:name', getArticleNAME, async (req, res) => {
+router.get('/:name', idFunctions.getArticleNAME, async (req, res) => {
     try{
        //const mytoken = await Token.find({_id: res.article.Article_tokens[0]});
         res.status(200).json(res.article);
@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
 })
 
 //Put
-router.put('/:id', getArticleID, async (req, res) => {
+router.put('/:id', idFunctions.getArticleID, async (req, res) => {
    try{ 
     
     const updatedArticle = await articleSchema.updateOne({_id : res.article._id}, req.body);
@@ -74,7 +74,7 @@ router.put('/:id', getArticleID, async (req, res) => {
 })
 
 //DELETE
-router.delete('/:id', getArticleID, async (req, res) => {
+router.delete('/:id', idFunctions.getArticleID, async (req, res) => {
     try{
         await res.article.remove();
         res.status(201).json({message: 'Deleted succesfully!'});
@@ -85,39 +85,6 @@ router.delete('/:id', getArticleID, async (req, res) => {
 })
 
 
-//middleware
-async function getArticleID(req, res, next){
-let article;
-try{
-    article = await articleSchema.findById(req.params.id);
-    // findById -- find docs by id
-    if(article == null){
-        return res.status(404).json({message: 'Article not found'})
-    }
-}
-catch(err){
-return res.status(500).json({message: err.message})
-}
 
-    res.article = article;
-    next();  //move on
-}
-
-async function getArticleNAME(req, res, next){
-    let article;
-    try{
-        article = await articleSchema.findOne({"Article_name": req.params.name});
-        //findOne -- return the first doc that contain the object form params
-        if(article == null){
-            return res.status(404).json({message: 'Article not found'})
-        }
-    }
-    catch(err){
-    return res.status(500).json({message: err.message})
-    }
-    
-        res.article = article;
-        next();  //move on
-    }
 
 module.exports = router;

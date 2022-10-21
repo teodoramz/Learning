@@ -1,12 +1,11 @@
 require('dotenv').config()
 const express = require('express');
 const router = express.Router();
-const tokensSchema = require('../models/tokens');
 const articlesSchema = require('../models/articles');
 const categoriesSchema = require('../models/categories');
 
-const idFunctions = require('../middlewares/routesFunc');
 
+const idFunctions = require('../middlewares/routesFunc');
 
 // get dupa un tokenID
 

@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const tokensSchema = require('../models/tokens');
 
+const idFunctions = require('../middlewares/routesFunc');
+
 
 router.get('/', async (req, res) => {
     try{
@@ -15,7 +17,7 @@ router.get('/', async (req, res) => {
    
 })
 
-router.get('/:id', getTokensID, (req, res) => {
+router.get('/:id', idFunctions.getTokensID, (req, res) => {
     try{
         //const ceva = {token1: res.token, token2: res.token }
         res.status(200).json(res.token);
@@ -40,7 +42,7 @@ router.post('/', async (req, res) => {
 })
 
 
-router.put('/:id', getTokensID, async (req, res) => {
+router.put('/:id', idFunctions.getTokensID, async (req, res) => {
     try{ 
      
      const updatedToken = await tokensSchema.updateOne({_id : res.token._id}, req.body);
@@ -52,7 +54,7 @@ router.put('/:id', getTokensID, async (req, res) => {
  })
  
  
- router.delete('/:id', getTokensID, async (req, res) => {
+ router.delete('/:id', idFunctions.getTokensID, async (req, res) => {
      try{
          await res.token.remove();
          res.status(201).json({message: 'Deleted succesfully!'});
@@ -62,21 +64,6 @@ router.put('/:id', getTokensID, async (req, res) => {
      }
  })
 
-async function getTokensID(req, res, next){
-    let token;
-    try{
-        token = await tokensSchema.findById(req.params.id);
-        // findById -- find docs by id
-        if(token == null){
-            return res.status(404).json({message: 'Token not found'})
-        }
-    }
-    catch(err){
-    return res.status(500).json({message: err.message})
-    }
-    
-        res.token = token;
-        next();  //move on
-    }
+
 
 module.exports = router;

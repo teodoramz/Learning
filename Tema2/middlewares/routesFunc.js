@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express');
-const router = express.Router();
+
 const tokensSchema = require('../models/tokens');
 const articlesSchema = require('../models/articles');
 const categoriesSchema = require('../models/categories');
@@ -25,7 +25,7 @@ async function getTokensID(req, res, next){
     async function getArticleID(req, res, next){
         let article;
         try{
-            article = await articleSchema.findById(req.params.id);
+            article = await articlesSchema.findById(req.params.id);
             // findById -- find docs by id
             if(article == null){
                 return res.status(404).json({message: 'Article not found'})
@@ -42,7 +42,7 @@ async function getTokensID(req, res, next){
         async function getArticleNAME(req, res, next){
             let article;
             try{
-                article = await articleSchema.findOne({"Article_name": req.params.name});
+                article = await articlesSchema.findOne({"Article_name": req.params.name});
                 //findOne -- return the first doc that contain the object form params
                 if(article == null){
                     return res.status(404).json({message: 'Article not found'})
@@ -59,7 +59,7 @@ async function getTokensID(req, res, next){
             async function getCategoriesID(req, res, next){
                 let category;
                 try{
-                    category = await categorySchema.findById(req.params.id);
+                    category = await categoriesSchema.findById(req.params.id);
                     // findById -- find docs by id
                     if(category == null){
                         return res.status(404).json({message: 'Category not found'})
