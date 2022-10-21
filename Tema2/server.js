@@ -21,6 +21,18 @@ app.use(express.json());
 const articlesRoute = require('./routes/articles');
 app.use('/articles', articlesRoute);
 
+//tokens routes
+const tokensRoute = require('./routes/tokens');
+app.use('/tokens', tokensRoute);
+
+//categories routes
+const categoriesRoute = require('./routes/categories');
+app.use('/categories', categoriesRoute);
+
+//tema 3 routes
+const tema3Route = require('./routes/tema3Routes');
+app.use('/tema3',tema3Route );
+
 //sv listening
 app.listen(process.env.SV_PORT, () =>
      console.log('Server is running on port ' + process.env.SV_PORT + " ..."));

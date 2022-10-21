@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const articleSchema = require('../models/articles');
+const Token = require('../models/tokens');
 
 
 //200 -- OK (all's good)
@@ -19,15 +20,16 @@ router.get('/', async (req, res) => {
         res.status(200).json(articles);
     }
     catch(err) {
-        res.status(500).json({message: err.message});
+        res.status(500).json({message: err.message});W
     }
    
 })
 
 
 //GET one  -- name
-router.get('/:name', getArticleNAME, (req, res) => {
+router.get('/:name', getArticleNAME, async (req, res) => {
     try{
+       //const mytoken = await Token.find({_id: res.article.Article_tokens[0]});
         res.status(200).json(res.article);
     }
     catch(err){
@@ -44,7 +46,9 @@ router.post('/', async (req, res) => {
         //insa in postman, totul este ok
         Article_name: req.body.Article_name,
         Article_no: req.body.Article_no,
-        Article_short_description: req.body.Article_short_description
+        Article_short_description: req.body.Article_short_description,
+        Article_tokensIDs: req.body.Article_tokensIDs,
+        Article_categoryID: req.body.Article_categoryID
     });
 
     try{

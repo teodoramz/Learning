@@ -11,7 +11,7 @@ var options = {
       "Article_short_description": "Nimic8",
       "Article_source": "random book8",
       "Article_URL": "wikipedia.com",
-      "Location": "Bucuresti8",
+      "Location": ["1", "2", "3", "5"],
       "Article_keywords": "oras petrecere informatie",
       "Article_weight": 33,
       "Article_citation": "random guyy8"

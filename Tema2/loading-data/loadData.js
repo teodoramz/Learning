@@ -11,6 +11,7 @@ var options = {
     "Article_short_description": "Nimic",
     "Article_source": "random book",
     "Article_URL": "wikipedia.com",
+    "Article_tokensIDs":["6352310b8d9f93015f0f432a"],
     "Location": "Bucuresti",
     "Article_keywords": "oras petrecere informatie",
     "Article_weight": 3,
@@ -31,10 +32,11 @@ options = {
     },
     body: JSON.stringify({
       "Article_name": "Articol doi",
-      "Article_no": 2,
+      "Article_no": 23,
       "Article_short_description": "Nimic2",
       "Article_source": "random book2",
       "Article_URL": "wikipedia.com2",
+      "Article_tokensIDs":["6352310b8d9f93015f0f432a"],
       "Location": "Bucuresti",
       "Article_keywords": "oras petrecere informatie",
       "Article_weight": 4,
@@ -54,12 +56,13 @@ options = {
     },
     body: JSON.stringify({
       "Article_name": "Articol trei",
-      "Article_no": 3,
+      "Article_no": 55,
       "Article_short_description": "Nimic3",
       "Article_source": "random book3",
       "Article_URL": "wikipedia.com3",
       "Location": "Bucuresti",
       "Article_keywords": "oras petrecere informatie",
+      "Article_tokensIDs":["6352310b8d9f93015f0f432a", "6352310b8d9f93015f0f432a" ],
       "Article_weight": 1,
       "Article_citation": "random guy3"
     })

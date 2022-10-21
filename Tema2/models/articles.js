@@ -9,6 +9,14 @@ const articleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    Article_categoryID: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Categories'
+    },
+    Article_tokensIDs:[{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Tokens'
+    }],
     Article_short_description: {
         type: String
     },

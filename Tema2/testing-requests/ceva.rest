@@ -2,7 +2,7 @@
  #GET http://localhost:5000/articles
 
 #get all
- #GET http://localhost:5000/articles
+ GET http://localhost:5000/articles
 
 #get by name
 GET http://localhost:5000/articles/Articol123
