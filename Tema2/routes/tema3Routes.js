@@ -13,25 +13,21 @@ const idFunctions = require('../middlewares/routesFunc');
 router.get('/:id', idFunctions.getTokensID, async (req, res) => {
     try{
         //const ceva = {token1: res.token, token2: res.token }
-        const final = {"token-res": res.token};
+        const articleCat = [];
         const articlesTk = await articlesSchema.find({Article_tokensIDs: { $all: [req.params.id]}})
-        
+        let category;
         for(i = 0; i<articlesTk.length; i++) {
             // inlocuiesc si id-ul de categorie cu numele 
-            
+             category = await categoriesSchema.findById(articlesTk[i].Article_categoryID)
+             articleCat.push({Category: category, Article: articlesTk[i]}) 
         }
-        articlesTk[0].Article_name = "teodor"
-
-        res.status(200).json(articlesTk[0]);
+       
+        res.status(200).json({"Token cautat": res.token, "Rezultate": articleCat});
     }
     catch(err){
         res.status(500).json({message: err.message});
     }
     
 })
-
-
-
-
 
 module.exports = router;
