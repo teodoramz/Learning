@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const categorySchema = require('../models/categories');
+const articlesSchema = require('../models/articles');
 
 const idFunctions = require('../middlewares/routesFunc');
 
@@ -55,6 +56,13 @@ router.put('/:id', idFunctions.getCategoriesID, async (req, res) => {
  router.delete('/:id', idFunctions.getCategoriesID, async (req, res) => {
      try{
          await res.category.remove();
+         const articlesTk = await articlesSchema.find({Article_categoryID: req.params.id})
+         for(i = 0; i < articlesTk.length; i++) {
+            
+            articlesTk[i].Article_categoryID = null;
+            await articlesTk[i].save();
+                       
+        }   
          res.status(201).json({message: 'Deleted succesfully!'});
      }
      catch(err){
